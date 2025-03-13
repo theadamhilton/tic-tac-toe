@@ -19,8 +19,23 @@ function selectGameMode() {
     return mode;
 }
 
-// Main game loop
-function main() {
+// Function to check game status (winner or tie)
+function checkGameStatus(board, player) {
+    if (getWinner(board)) {
+        console.log(`Player ${player} is the winner!`);
+        return true;
+    }
+
+    if (isBoardTie(board)) {
+        console.log("It's a tie!");
+        return true;
+    }
+
+    return false;
+}
+
+// Main game function
+function playGame() {
     const mode = selectGameMode();
     const board = createNewBoard();
     renderBoard(board);
@@ -31,7 +46,6 @@ function main() {
         try {
             if (mode === '1') {
                 // User vs AI
-                // User's turn
                 const moveX = getMove('X', board);
                 makeMove('X', board, moveX);
                 renderBoard(board);
@@ -41,7 +55,6 @@ function main() {
                     break;
                 }
 
-                // AI's turn
                 console.log("Thinking...");
                 const moveO = findWinningAndLosingMoves(board, 'O');
                 makeMove('O', board, moveO);
@@ -53,7 +66,6 @@ function main() {
                 }
             } else if (mode === '2') {
                 // User vs User
-                // Player X's turn
                 const moveX = getMove('X', board);
                 makeMove('X', board, moveX);
                 renderBoard(board);
@@ -63,7 +75,6 @@ function main() {
                     break;
                 }
 
-                // Player O's turn
                 const moveO = getMove('O', board);
                 makeMove('O', board, moveO);
                 renderBoard(board);
@@ -100,20 +111,29 @@ function main() {
     }
 }
 
-// Helper function to check for winner or tie
-function checkGameStatus(board, player) {
-    if (getWinner(board)) {
-        console.log(`Player ${player} is the winner!`);
-        return true;
+// Replay or Exit Function
+function replayOrExit() {
+    while (true) {
+        const choice = prompt("Do you want to play again? (yes or no): ").toLowerCase();
+        if (choice === 'yes') {
+            return true; // Replay the game
+        } else if (choice === 'no') {
+            console.log("Thanks for playing!");
+            return false; // Exit the game
+        } else {
+            console.log("Invalid input. Please enter 'yes' or 'no'.");
+        }
     }
-
-    if (isBoardTie(board)) {
-        console.log("It's a tie!");
-        return true;
-    }
-
-    return false;
 }
 
-// Start the game
+// Start the Game with Replay Option
+function main() {
+    let keepPlaying = true;
+
+    while (keepPlaying) {
+        playGame();
+        keepPlaying = replayOrExit();
+    }
+}
+
 main();
