@@ -6,7 +6,6 @@
 
 .board {
   display: inline-block;
-  margin: auto;
 }
 
 .board-row {
@@ -14,14 +13,14 @@
 }
 
 .square {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   font-size: 24px;
   font-weight: bold;
+  border: 1px solid #333;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid #333;
-  margin: -1px; /* Fixes double borders */
+  margin: -1px; /* Fix for borders */
 }
